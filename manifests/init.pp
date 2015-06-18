@@ -70,8 +70,11 @@ class passenger (
   $compile_passenger      = $passenger::params::compile_passenger,
   $include_build_tools    = false,
 ) inherits passenger::params {
-
-  include '::apache'
+  
+  # We want to be able to overwrite apache configurations, so we declare the
+  # apache class separately in the node definition. Comment it out here to 
+  # avoid duplicate declaration.
+  # include '::apache'
   include '::apache::dev'
 
   include '::passenger::install'
