@@ -75,7 +75,11 @@ class passenger (
   # apache class separately in the node definition. Comment it out here to 
   # avoid duplicate declaration.
   # include '::apache'
-  include '::apache::dev'
+
+  # Because we're declaring apache seperatley in the node definition, we also
+  # need to declare apache::dev there, due to dependency issues.
+  # include '::apache::dev'
+
 
   include '::passenger::install'
   include '::passenger::config'
@@ -87,7 +91,7 @@ class passenger (
     Class['passenger::config']
   }
 
-  if type($include_build_tools) == 'string' {
+  if type3x($include_build_tools) == 'string' {
     $include_build_tools_real = str2bool($include_build_tools)
   } else {
     $include_build_tools_real = $include_build_tools
